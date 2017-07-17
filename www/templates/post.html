@@ -1,15 +1,41 @@
 <ion-modal-view>
-    <ion-header-bar>
-      <h1 class="title">My Modal title</h1>
-    </ion-header-bar>
-    <ion-content>
-      Hello!
-    </ion-content>
-    <ion-footer-bar>
+  <ion-header-bar>
+    <h1 class="title">Связь</h1>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+      <label class="item item-input item-label">
+          <span class = "input-label">Имя</span>
+          <input type = "text" placeholder = "Имя" />
+      </label>
+
+      <label class="item item-input item-label">
+          <span class = "input-label">Телефон</span>
+          <input type = "text" placeholder = "+3 8 099 123 45 67" />
+      </label>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          Где занятия
+        </div>
+        <select>
+          <option>Дома</option>
+          <option>На выезде</option>
+          <option>Онлайн</option>
+        </select>
+      </label>
+      <!--<label class="item item-input">-->
+      <!--</label>-->
+    </div>
+        <div class="post__comment">
+          Комментарий
+        </div>
+        <textarea class="post__textarea" cols="30" rows="10"></textarea>
+  </ion-content>
+  <ion-footer-bar>
     <div style="margin: 0 auto">
       <button class="button button-stable" ng-click="closeModal()">
         Отпаравить
       </button>
     </div>
-    </ion-footer-bar>
-  </ion-modal-view>
+  </ion-footer-bar>
+</ion-modal-view>

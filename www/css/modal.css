@@ -1,0 +1,8 @@
+.post__comment {
+    margin-left: 16px;
+}
+.post__textarea {
+    width: calc(100% - 32px);
+    margin: 0 auto;
+    border: 1px solid  #333;
+}
