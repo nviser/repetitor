@@ -4,5 +4,6 @@
 .post__textarea {
     width: calc(100% - 32px);
     margin: 0 auto;
-    border: 1px solid  #333;
+    border: 1px solid  #ddd;
+    resize: none;
 }

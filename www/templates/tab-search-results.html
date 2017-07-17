@@ -1,0 +1,14 @@
+<ion-view view-title="Список">
+  <ion-content class="padding">
+
+      <div class="card">
+        <div class="item item-text-wrap" ng-repeat="person in repetitors" ng-click="goTo(person.id)">
+          {{person.name}} <br>
+          {{person.subject}} <br>
+          від {{person.price}} грн/{{person.units}} <br>
+          м.{{person.city}}
+        </div>
+      </div>
+
+  </ion-content>
+</ion-view>

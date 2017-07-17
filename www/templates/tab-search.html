@@ -6,36 +6,39 @@
     <div class="input-label">
       Специалист
     </div>
-    <select>
-      <option>Blue</option>
-      <option>Green</option>
-      <option>Red</option>
+    <select ng-model="subject">
+      <option>Біологія</option>
+      <option>Математика</option>
+      <option>Українська мова</option>
+      <option>Англійська мова</option>
     </select>
   </label>
       <label class="item item-input item-select">
     <div class="input-label">
       Цена
     </div>
-    <select>
-      <option>Blue</option>
-      <option>Green</option>
-      <option>Red</option>
+    <select ng-model="price">
+      <option>45</option>
+      <option>50</option>
+      <option>60</option>
+      <option>70</option>
     </select>
   </label>
       <label class="item item-input item-select">
     <div class="input-label">
       Город
     </div>
-    <select>
-      <option>Blue</option>
-      <option>Green</option>
-      <option>Red</option>
+    <select ng-model="city">
+      <option>Суми</option>
+      <option>Лебедин</option>
+      <option>Тростянець</option>
+      <option>Шостка</option>
     </select>
   </label>
 
     </div>
     <div style="text-align: center">
-      <button class="button button-stable" ng-click="goTo()">
+      <button class="button button-stable" ng-click="goTo(subject, price, city)">
         Найти
       </button>
     </div>

@@ -1,16 +1,41 @@
 angular.module('starter.controllers', [])
 
-  .controller('searchCtrl', function ($scope, $state) {
-    $scope.goTo = function () {
+  .controller('searchCtrl', function ($scope, $state, Repetitors) {
+    $scope.goTo = function (subject, price, city) {
+    var filtered = [];
+      var persons = Repetitors.get();
+      angular.forEach(persons, function(val, key) {
+        if((val.subject == subject || subject == undefined) && (val.price == price || price == undefined) && (val.city == city || city == undefined)) {
+          filtered.push(val)
+        }
+      });
+      localStorage.setItem('repetitors_filtered', JSON.stringify(filtered));
       $state.go('tab.search-details');
+      console.log(subject, price, city);
     }
   })
-  .controller('searchDetailsCtrl', function ($scope, $state) {
-    $scope.goTo = function () {
+  .controller('searchResultsCtrl', function ($scope, $state, Repetitors) {
+    $scope.goTo = function (id) {
+      localStorage.setItem('person_id', id);
       $state.go('tab.search-person');
     }
+    $scope.repetitors = JSON.parse(localStorage.getItem('repetitors_filtered'));//Repetitors.get();
+    console.log($scope.repetitors);
   })
-  .controller('searchPersonCtrl', function ($scope, $state, $ionicModal) {
+  .controller('searchPersonCtrl', function ($scope, $state, $ionicModal, $ionicPopup, Repetitors) {
+
+    var person = Repetitors.get();
+    var id = localStorage.getItem('person_id');
+    angular.forEach(person, function(val, key){
+      if(id == val.id) {
+        $scope.name = val.name;
+        $scope.price = val.price;
+        $scope.phone = val.phone;
+        $scope.city = val.city;
+        $scope.experience = val.experience;
+        $scope.subject = val.subject;
+      }
+    });
 
     $ionicModal.fromTemplateUrl('templates/post.html', {
       scope: $scope
@@ -24,7 +49,13 @@ angular.module('starter.controllers', [])
       $scope.modal.show();
     }
     $scope.closeModal = function () {
-      $scope.modal.hide();
+       var alertPopup = $ionicPopup.alert({
+                        template: 'Спасибо, ждите связи'
+                    });
+
+                    alertPopup.then(function (res) {
+                      $scope.modal.hide();
+                    });
     }
 
   })
