@@ -4,7 +4,7 @@
     <div class="list card">
 
       <div class="item item-avatar">
-        <img src="img/max.png">
+        <img src="{{photo}}">
         <h2>{{name}}</h2>
         <p>{{age}}</p>
       </div>
@@ -24,6 +24,9 @@
     <div style="text-align: center">
       <button class="button button-stable" ng-click="openModal()">
         Связаться
+      </button>
+      <button class="button button-positive" ng-click="addToFav(id)">
+        Добавить в избранное
       </button>
     </div>
   </ion-content>

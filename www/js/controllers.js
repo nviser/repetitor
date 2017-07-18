@@ -11,7 +11,7 @@ angular.module('starter.controllers', [])
       });
       localStorage.setItem('repetitors_filtered', JSON.stringify(filtered));
       $state.go('tab.search-details');
-      console.log(subject, price, city);
+      //console.log(subject, price, city);
     }
   })
   .controller('searchResultsCtrl', function ($scope, $state, Repetitors) {
@@ -20,13 +20,13 @@ angular.module('starter.controllers', [])
       $state.go('tab.search-person');
     }
     $scope.repetitors = JSON.parse(localStorage.getItem('repetitors_filtered'));//Repetitors.get();
-    console.log($scope.repetitors);
+    //console.log($scope.repetitors);
   })
   .controller('searchPersonCtrl', function ($scope, $state, $ionicModal, $ionicPopup, Repetitors) {
 
-    var person = Repetitors.get();
+    var persons = Repetitors.get();
     var id = localStorage.getItem('person_id');
-    angular.forEach(person, function(val, key){
+    angular.forEach(persons, function(val, key){
       if(id == val.id) {
         $scope.name = val.name;
         $scope.price = val.price;
@@ -34,6 +34,9 @@ angular.module('starter.controllers', [])
         $scope.city = val.city;
         $scope.experience = val.experience;
         $scope.subject = val.subject;
+        $scope.photo = val.face;
+        $scope.id = val.id;
+        $scope.person = val;
       }
     });
 
@@ -43,7 +46,29 @@ angular.module('starter.controllers', [])
       //console.log('iMod');
       $scope.modal = modal;
     });
+    $scope.addToFav = function(id) {
 
+      var fav, flag = 0;
+      var repetitor_fav = localStorage.getItem('repetitor_fav');
+      if(repetitor_fav && angular.isArray(JSON.parse(repetitor_fav))){
+        fav = JSON.parse(repetitor_fav);
+        angular.forEach(fav, function(val, key){
+          if(val.id == $scope.person.id) {
+            flag = 1;
+          }
+        });
+
+        if(!flag) {
+          fav.push($scope.person);
+          localStorage.setItem('repetitor_fav', JSON.stringify(fav));
+        } 
+      } else {
+          fav = [];
+          fav.push($scope.person);
+          localStorage.setItem('repetitor_fav', JSON.stringify(fav));
+        } 
+
+    }
     $scope.openModal = function () {
       //console.log($scope.modal.show);
       $scope.modal.show();
@@ -60,7 +85,7 @@ angular.module('starter.controllers', [])
 
   })
 
-  .controller('ChatsCtrl', function ($scope, Chats) {
+  .controller('FavCtrl', function ($scope, Chats) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
