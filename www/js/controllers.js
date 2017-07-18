@@ -85,7 +85,7 @@ angular.module('starter.controllers', [])
 
   })
 
-  .controller('FavCtrl', function ($scope, Chats) {
+  .controller('FavCtrl', function ($scope, Chats, Repetitors) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -94,7 +94,14 @@ angular.module('starter.controllers', [])
     //$scope.$on('$ionicView.enter', function(e) {
     //});
 
-    $scope.chats = Chats.all();
+    //$scope.chats = Chats.all();
+    $scope.favs = JSON.parse(localStorage.getItem('repetitor_fav'));
+    $scope.delFav = function(fav) {
+      var index = $scope.favs.indexOf(fav);
+      $scope.favs.splice(index, 1);
+      localStorage.setItem('repetitor_fav', JSON.stringify($scope.favs));
+    }
+    
     $scope.remove = function (chat) {
       Chats.remove(chat);
     };

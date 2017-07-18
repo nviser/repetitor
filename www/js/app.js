@@ -70,6 +70,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'/*,
 
   .state('tab.fav', {
       url: '/fav',
+      cache: false,
       views: {
         'tab-fav': {
           templateUrl: 'templates/tab-fav.html',
