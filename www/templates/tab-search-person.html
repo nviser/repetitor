@@ -6,26 +6,27 @@
       <div class="item item-avatar">
         <img src="{{photo}}">
         <h2>{{name}}</h2>
-        <p>{{age}}</p>
+        <p>{{age}} р.</p>
       </div>
 
       <div class="item item-body">
         <!--<img class="full-image" src="delorean.jpg">-->
-        <p>цена: {{price}} грн/{{units}}</p>
-        <p>тел: {{phone}}</p>
-        <p>город: {{city}}</p>
-        <p>стаж: {{experience}}</p>
-        <p>
+        <p><strong>Предмет:</strong> {{subject}}</p>
+        <p><strong>Ціна:</strong> {{price}} грн/{{units}}</p>
+        <p><strong>Телефон:</strong> {{phone}}</p>
+        <p><strong>Місто:</strong> {{city}}</p>
+        <p><strong>Досвід:</strong> {{experience}}</p>
+        <!-- <p>
           <a href="#" class="subdued">1 Like</a>
           <a href="#" class="subdued">5 Comments</a>
-        </p>
+        </p> -->
       </div>
     </div>
     <div style="text-align: center">
       <button class="button button-stable" ng-click="openModal()">
         Связаться
       </button>
-      <button class="button button-positive" ng-click="addToFav(id)">
+      <button class="button button-positive" ng-click="addToFav(id)" ng-hide="flag">
         Добавить в избранное
       </button>
     </div>

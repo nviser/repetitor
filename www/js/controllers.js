@@ -2,10 +2,10 @@ angular.module('starter.controllers', [])
 
   .controller('searchCtrl', function ($scope, $state, Repetitors) {
     $scope.goTo = function (subject, price, city) {
-    var filtered = [];
+      var filtered = [];
       var persons = Repetitors.get();
-      angular.forEach(persons, function(val, key) {
-        if((val.subject == subject || subject == undefined) && (val.price == price || price == undefined) && (val.city == city || city == undefined)) {
+      angular.forEach(persons, function (val, key) {
+        if ((val.subject == subject || subject == undefined) && (val.price == price || price == undefined) && (val.city == city || city == undefined)) {
           filtered.push(val)
         }
       });
@@ -26,17 +26,26 @@ angular.module('starter.controllers', [])
 
     var persons = Repetitors.get();
     var id = localStorage.getItem('person_id');
-    angular.forEach(persons, function(val, key){
-      if(id == val.id) {
+    angular.forEach(persons, function (val, key) {
+      if (id == val.id) {
         $scope.name = val.name;
+        $scope.age = val.age;
         $scope.price = val.price;
         $scope.phone = val.phone;
         $scope.city = val.city;
+        $scope.units = val.units;
         $scope.experience = val.experience;
         $scope.subject = val.subject;
         $scope.photo = val.face;
         $scope.id = val.id;
         $scope.person = val;
+      }
+    });
+    $scope.flag = false;
+    var favourites = JSON.parse(localStorage.getItem('repetitor_fav'));
+    angular.forEach(favourites, function (val, key) {
+      if (val.id == $scope.person.id) {
+        $scope.flag = true;
       }
     });
 
@@ -46,46 +55,66 @@ angular.module('starter.controllers', [])
       //console.log('iMod');
       $scope.modal = modal;
     });
-    $scope.addToFav = function(id) {
+    $scope.addToFav = function (id) {
 
       var fav, flag = 0;
       var repetitor_fav = localStorage.getItem('repetitor_fav');
-      if(repetitor_fav && angular.isArray(JSON.parse(repetitor_fav))){
+      if (repetitor_fav && angular.isArray(JSON.parse(repetitor_fav))) {
         fav = JSON.parse(repetitor_fav);
-        angular.forEach(fav, function(val, key){
-          if(val.id == $scope.person.id) {
+        angular.forEach(fav, function (val, key) {
+          if (val.id == $scope.person.id) {
             flag = 1;
           }
         });
 
-        if(!flag) {
+        if (!flag) {
           fav.push($scope.person);
           localStorage.setItem('repetitor_fav', JSON.stringify(fav));
-        } 
+          $scope.showAlert('Добавлено в избранное');
+          $scope.flag = true;
+        } /* else {
+          $scope.showAlert('Этот преподаватель уже в избранном');
+        } */
       } else {
-          fav = [];
-          fav.push($scope.person);
-          localStorage.setItem('repetitor_fav', JSON.stringify(fav));
-        } 
+        fav = [];
+        fav.push($scope.person);
+        localStorage.setItem('repetitor_fav', JSON.stringify(fav));
+        $scope.showAlert('Добавлено в избранное');
+        $scope.flag = true;
+      }
 
     }
     $scope.openModal = function () {
       //console.log($scope.modal.show);
       $scope.modal.show();
     }
-    $scope.closeModal = function () {
-       var alertPopup = $ionicPopup.alert({
-                        template: 'Спасибо, ждите связи'
-                    });
+    $scope.closeModal = function (arg) {
+      if (arg == 1) {
+        var alertPopup = $ionicPopup.alert({
+          template: 'Спасибо, ждите связи'
+        });
 
-                    alertPopup.then(function (res) {
-                      $scope.modal.hide();
-                    });
+        alertPopup.then(function (res) {
+          $scope.modal.hide();
+        });
+      } else {
+        $scope.modal.hide();
+      }
+    }
+
+    $scope.showAlert = function (text) {
+      var alertPopup = $ionicPopup.alert({
+        template: text
+      });
+
+      alertPopup.then(function (res) {
+
+      });
     }
 
   })
 
-  .controller('FavCtrl', function ($scope, Chats, Repetitors) {
+  .controller('FavCtrl', function ($scope, Chats, Repetitors, $state) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -96,15 +125,21 @@ angular.module('starter.controllers', [])
 
     //$scope.chats = Chats.all();
     $scope.favs = JSON.parse(localStorage.getItem('repetitor_fav'));
-    $scope.delFav = function(fav) {
+    $scope.delFav = function (fav) {
       var index = $scope.favs.indexOf(fav);
       $scope.favs.splice(index, 1);
       localStorage.setItem('repetitor_fav', JSON.stringify($scope.favs));
     }
-    
+
     $scope.remove = function (chat) {
       Chats.remove(chat);
     };
+
+    $scope.goTo = function (id) {
+      console.log(id);
+      localStorage.setItem('person_id', id);
+      $state.go('tab.search-person');
+    }
   })
 
   .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
