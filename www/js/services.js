@@ -115,6 +115,71 @@ angular.module('starter.services', [])
     place: 'у викладача/в учня',
     experience: 11,
     face: 'img/mike.png'
+  }, {
+    id: 5,
+    name: 'Мішкін Петро Валентинович',
+    age: 37,
+    city: 'Суми',
+    phone: 0936538380,
+    address: 'рн.Шевченковський',
+    subject: 'Українська мова',
+    price: 50,
+    units: 'год',
+    place: 'у викладача/в учня',
+    experience: 11,
+    face: 'img/adam.png'
+  }, {
+    id: 6,
+    name: 'Васькін Тарас Валентинович',
+    age: 21,
+    city: 'Суми',
+    phone: 0936538380,
+    address: 'рн.Шевченковський',
+    subject: 'Українська мова',
+    price: 50,
+    units: 'год',
+    place: 'у викладача/в учня',
+    experience: 11,
+    face: 'img/mike.png'
+  },{
+    id: 7,
+    name: 'Корнієнко Тарас Валентинович',
+    age: 31,
+    city: 'Суми',
+    phone: 0936538380,
+    address: 'рн.Шевченковський',
+    subject: 'Українська мова',
+    price: 50,
+    units: 'год',
+    place: 'у викладача/в учня',
+    experience: 11,
+    face: 'img/mike.png'
+  }, {
+    id: 8,
+    name: 'Їх Віра Вальдемарівна',
+    age: 32,
+    city: 'Суми',
+    phone: 0936538380,
+    address: 'рн.Шевченковський',
+    subject: 'Українська мова',
+    price: 50,
+    units: 'год',
+    place: 'у викладача/в учня',
+    experience: 11,
+    face: 'img/adam.png'
+  }, {
+    id: 9,
+    name: 'Світличний Микола',
+    age: 23,
+    city: 'Суми',
+    phone: 0936538380,
+    address: 'рн.Шевченковський',
+    subject: 'Українська мова',
+    price: 50,
+    units: 'год',
+    place: 'у викладача/в учня',
+    experience: 11,
+    face: 'img/mike.png'
   }];
   return {
     get: function () {

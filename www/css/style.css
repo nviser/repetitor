@@ -1,1 +1,33 @@
 /* Empty. Add your own CSS if you like */
+.item-text-wrap.ng-enter, .item-text-wrap.ng-leave {
+    transition: transform ease 500ms;
+}
+.item-text-wrap.ng-enter {
+    transform: translateX(200%);
+    opacity:0;
+}
+.item-text-wrap.ng-enter.ng-enter-active {
+    transform: translateX(0);
+    opacity:1;
+}
+.item-text-wrap.ng-enter-stagger {
+    transition-delay: .05s;
+    -webkit-transition-delay: .05s;
+    transition-duration: 0s;
+    -webkit-transition-duration: 0s;
+}
+.item-text-wrap.ng-leave.ng-leave-active {
+    transform: translateX(-120%);
+    opacity:1;
+
+}
+.item-text-wrap.ng-leave {
+    transform: translateX(0);
+    opacity: 0;
+}
+.item-text-wrap.ng-leave-stagger {
+    transition-delay: .05s;
+    -webkit-transition-delay: .05s;
+    transition-duration: 0s;
+    -webkit-transition-duration: 0s;
+}

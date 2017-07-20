@@ -19,8 +19,26 @@ angular.module('starter.controllers', [])
       localStorage.setItem('person_id', id);
       $state.go('tab.search-person');
     }
-    $scope.repetitors = JSON.parse(localStorage.getItem('repetitors_filtered'));//Repetitors.get();
-    //console.log($scope.repetitors);
+    var ar = JSON.parse(localStorage.getItem('repetitors_filtered'));//Repetitors.get();
+    var len = ar.length;
+    var show = 4;
+    var flag = 0, full = false;
+
+    $scope.repetitors = ar.slice(0, show);
+    $scope.spinner = true;
+    $scope.loadMore = function () {
+      if(!full){
+        flag++;
+        var temp = ar.slice(show*flag, show*flag + show);
+        $scope.repetitors = $scope.repetitors.concat(temp);
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+      }
+
+      if(show*flag + show >= len){
+        full = true;
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+      } 
+    }
   })
   .controller('searchPersonCtrl', function ($scope, $state, $ionicModal, $ionicPopup, Repetitors) {
 
@@ -136,7 +154,6 @@ angular.module('starter.controllers', [])
     };
 
     $scope.goTo = function (id) {
-      console.log(id);
       localStorage.setItem('person_id', id);
       $state.go('tab.search-person');
     }
