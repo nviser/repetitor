@@ -127,7 +127,7 @@ angular.module('starter.services', [])
     units: 'год',
     place: 'у викладача/в учня',
     experience: 11,
-    face: 'img/adam.png'
+    face: 'img/adam.jpg'
   }, {
     id: 6,
     name: 'Васькін Тарас Валентинович',
@@ -166,7 +166,7 @@ angular.module('starter.services', [])
     units: 'год',
     place: 'у викладача/в учня',
     experience: 11,
-    face: 'img/adam.png'
+    face: 'img/adam.jpg'
   }, {
     id: 9,
     name: 'Світличний Микола',
