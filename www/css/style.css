@@ -31,3 +31,45 @@
     transition-duration: 0s;
     -webkit-transition-duration: 0s;
 }
+.search__results.card {
+    margin-top: 5px;
+    box-shadow: none;
+    /* border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd; */
+}
+.search__results.card .item.item-text-wrap {
+    /* border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd; */
+    border: 1px solid #ddd;
+}
+.search__no-matches {
+    text-align: center;
+    height: 100%;
+    transform: translate(0, 50%);
+}
+
+/* ------ header ------ */
+.bar .title.title-left {
+    /* text-align: center; */
+}
+
+/* ------ favourites ------ */
+.favourites__default-text {
+    text-align: center;
+    transform: translate(0, 50%);
+    height: 100%;
+}
+
+/* ------ about ------ */
+.about {
+    padding-top: 2%;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+}
+.about .about__title {
+    text-align: center;
+}
+ .about p {
+    text-align: justify;
+} 

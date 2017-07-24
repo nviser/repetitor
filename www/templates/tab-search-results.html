@@ -1,17 +1,17 @@
 <ion-view view-title="Список">
-  <ion-content class="padding">
+  <ion-content class="padding" >
 
-      <!-- <div class="card" ng-show="repetitors.length"> -->
+       <div class="search__results card" ng-show="repetitors.length"> 
         <div class="item item-text-wrap" ng-repeat="person in repetitors" ng-click="goTo(person.id)">
           {{person.name}} <br>
           {{person.subject}} <br>
           від {{person.price}} грн/{{person.units}} <br>
           м.{{person.city}}
         </div>
-      <!-- </div> -->
+       </div> 
+      <div class="search__no-matches" ng-hide="repetitors.length">Нет совпадений по соответствующим критериям</div>
       <ion-infinite-scroll distance="1%" on-infinite="loadMore()" ng-if="spinner" immediate-check="false">
             <ion-spinner icon="" class="spinner spinner-android">
         </ion-infinite-scroll>
-      <div style="text-align: center" ng-hide="repetitors.length" >Нет совпадений по соответствующим критериям</div>
   </ion-content>
 </ion-view>

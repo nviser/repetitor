@@ -27,21 +27,22 @@ angular.module('starter.controllers', [])
     $scope.repetitors = ar.slice(0, show);
     $scope.spinner = true;
     $scope.loadMore = function () {
-      if(!full){
+      if (!full) {
         flag++;
-        var temp = ar.slice(show*flag, show*flag + show);
+        var temp = ar.slice(show * flag, show * flag + show);
         $scope.repetitors = $scope.repetitors.concat(temp);
         $scope.$broadcast('scroll.infiniteScrollComplete');
       }
 
-      if(show*flag + show >= len){
+      if (show * flag + show >= len) {
         full = true;
         $scope.$broadcast('scroll.infiniteScrollComplete');
-      } 
+      }
     }
   })
   .controller('searchPersonCtrl', function ($scope, $state, $ionicModal, $ionicPopup, Repetitors) {
 
+    $scope.sendData = {};
     var persons = Repetitors.get();
     var id = localStorage.getItem('person_id');
     angular.forEach(persons, function (val, key) {
@@ -90,9 +91,7 @@ angular.module('starter.controllers', [])
           localStorage.setItem('repetitor_fav', JSON.stringify(fav));
           $scope.showAlert('Добавлено в избранное');
           $scope.flag = true;
-        } /* else {
-          $scope.showAlert('Этот преподаватель уже в избранном');
-        } */
+        }
       } else {
         fav = [];
         fav.push($scope.person);
@@ -107,17 +106,41 @@ angular.module('starter.controllers', [])
       $scope.modal.show();
     }
     $scope.closeModal = function (arg) {
-      if (arg == 1) {
-        var alertPopup = $ionicPopup.alert({
-          template: 'Спасибо, ждите связи'
-        });
-
-        alertPopup.then(function (res) {
-          $scope.modal.hide();
-        });
-      } else {
+      if (arg == 1 && $scope.sendData.name && $scope.sendData.phone && $scope.sendData.place && $scope.sendData.comment) {
+        console.log($scope.sendData.phone.length);
+        if ($scope.sendData.phone.length == 12) {
+          var alertPopup = $ionicPopup.alert({
+            template: 'Спасибо, ждите связи'
+          });
+          console.log('name: ', $scope.sendData.name);
+          console.log('phone: ', $scope.sendData.phone);
+          console.log('place: ', $scope.sendData.place);
+          console.log('comment: ', $scope.sendData.comment);
+          alertPopup.then(function (res) {
+            $scope.modal.hide();
+          });
+        } else {
+          var alertPopup = $ionicPopup.alert({
+            template: 'Проверьте номер телефона'
+          });
+        }
+      } else if (arg == 0) {
         $scope.modal.hide();
+      } else {
+        var alertPopup = $ionicPopup.alert({
+          template: 'Заполните, пожалуйста, все поля!'
+        });
       }
+    }
+
+    $scope.numberCheck = function (data) {
+      console.log('daes');
+      //var secDigit = phone.substr(1, 2);
+      $scope.sendData.phone = '+3' + data.phone.split('').filter(function (val) {
+        return Number(val) || val == '0';
+      }).join('').substr(1, 10);
+      //$rootScope.userPhone = $scope.phone;
+      //if ($scope.sendData.phone.length == 12) $scope.phoneIncorrect = false;
     }
 
     $scope.showAlert = function (text) {
