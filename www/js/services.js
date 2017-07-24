@@ -97,7 +97,7 @@ angular.module('starter.services', [])
     phone: '+380681312113',
     address: 'рн.Шевченковський',
     subject: 'Англійська мова',
-    price: 40,
+    price: 70,
     units: 'год',
     place: 'у викладача/в учня',
     experience: 12,

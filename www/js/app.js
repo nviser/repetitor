@@ -50,6 +50,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'/*,
       })
       .state('tab.search-details', {
         url: '/search/details',
+        cache: false,
         views: {
           'tab-search': {
             templateUrl: 'templates/tab-search-results.html',
@@ -59,6 +60,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'/*,
       })
       .state('tab.search-person', {
         url: '/search/details/person',
+        cache: false,
         views: {
           'tab-search': {
             templateUrl: 'templates/tab-search-person.html',
