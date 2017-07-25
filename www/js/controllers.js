@@ -1,17 +1,22 @@
 angular.module('starter.controllers', [])
 
   .controller('searchCtrl', function ($scope, $state, Repetitors) {
-    $scope.goTo = function (subject, price, city) {
+    $scope.searchData = {};
+    $scope.goTo = function () {
       var filtered = [];
       var persons = Repetitors.get();
       angular.forEach(persons, function (val, key) {
-        if ((val.subject == subject || subject == undefined) && (val.price == price || price == undefined) && (val.city == city || city == undefined)) {
+        if ((val.subject == $scope.searchData.subject || $scope.searchData.subject == undefined) && (val.price == $scope.searchData.price || $scope.searchData.price == undefined) && (val.city == $scope.searchData.city || $scope.searchData.city == undefined)) {
           filtered.push(val)
         }
       });
       localStorage.setItem('repetitors_filtered', JSON.stringify(filtered));
       $state.go('tab.search-details');
-      //console.log(subject, price, city);
+    }
+    $scope.clearSearch = function () {
+      $scope.searchData.subject = null;
+      $scope.searchData.price = null;
+      $scope.searchData.city = null;
     }
   })
   .controller('searchResultsCtrl', function ($scope, $state, Repetitors) {
@@ -19,7 +24,7 @@ angular.module('starter.controllers', [])
       localStorage.setItem('person_id', id);
       $state.go('tab.search-person');
     }
-    var ar = JSON.parse(localStorage.getItem('repetitors_filtered'));//Repetitors.get();
+    var ar = JSON.parse(localStorage.getItem('repetitors_filtered'));
     var len = ar.length;
     var show = 4;
     var flag = 0, full = false;
@@ -71,7 +76,6 @@ angular.module('starter.controllers', [])
     $ionicModal.fromTemplateUrl('templates/post.html', {
       scope: $scope
     }).then(function (modal) {
-      //console.log('iMod');
       $scope.modal = modal;
     });
     $scope.addToFav = function (id) {
@@ -102,12 +106,11 @@ angular.module('starter.controllers', [])
 
     }
     $scope.openModal = function () {
-      //console.log($scope.modal.show);
       $scope.modal.show();
     }
     $scope.closeModal = function (arg) {
       if (arg == 1 && $scope.sendData.name && $scope.sendData.phone && $scope.sendData.place && $scope.sendData.comment) {
-        console.log($scope.sendData.phone.length);
+        //console.log($scope.sendData.phone.length);
         if ($scope.sendData.phone.length == 12) {
           var alertPopup = $ionicPopup.alert({
             template: 'Спасибо, ждите связи'
@@ -134,13 +137,9 @@ angular.module('starter.controllers', [])
     }
 
     $scope.numberCheck = function (data) {
-      console.log('daes');
-      //var secDigit = phone.substr(1, 2);
       $scope.sendData.phone = '+3' + data.phone.split('').filter(function (val) {
         return Number(val) || val == '0';
       }).join('').substr(1, 10);
-      //$rootScope.userPhone = $scope.phone;
-      //if ($scope.sendData.phone.length == 12) $scope.phoneIncorrect = false;
     }
 
     $scope.showAlert = function (text) {
@@ -155,9 +154,83 @@ angular.module('starter.controllers', [])
 
   })
 
+  .controller('favPersonCtrl', function ($scope, $state, $ionicModal, $ionicPopup, Repetitors) {
+
+    $scope.sendData = {};
+    var persons = Repetitors.get();
+    var id = localStorage.getItem('fav_person_id');
+    angular.forEach(persons, function (val, key) {
+      if (id == val.id) {
+        $scope.name = val.name;
+        $scope.age = val.age;
+        $scope.price = val.price;
+        $scope.phone = val.phone;
+        $scope.city = val.city;
+        $scope.units = val.units;
+        $scope.experience = val.experience;
+        $scope.subject = val.subject;
+        $scope.photo = val.face;
+        $scope.id = val.id;
+        $scope.person = val;
+      }
+    });
+
+    $ionicModal.fromTemplateUrl('templates/post.html', {
+      scope: $scope
+    }).then(function (modal) {
+      $scope.modal = modal;
+    });
+
+    $scope.openModal = function () {
+      $scope.modal.show();
+    }
+    $scope.closeModal = function (arg) {
+      if (arg == 1 && $scope.sendData.name && $scope.sendData.phone && $scope.sendData.place && $scope.sendData.comment) {
+        //console.log($scope.sendData.phone.length);
+        if ($scope.sendData.phone.length == 12) {
+          var alertPopup = $ionicPopup.alert({
+            template: 'Спасибо, ждите связи'
+          });
+          console.log('name: ', $scope.sendData.name);
+          console.log('phone: ', $scope.sendData.phone);
+          console.log('place: ', $scope.sendData.place);
+          console.log('comment: ', $scope.sendData.comment);
+          alertPopup.then(function (res) {
+            $scope.modal.hide();
+          });
+        } else {
+          var alertPopup = $ionicPopup.alert({
+            template: 'Проверьте номер телефона'
+          });
+        }
+      } else if (arg == 0) {
+        $scope.modal.hide();
+      } else {
+        var alertPopup = $ionicPopup.alert({
+          template: 'Заполните, пожалуйста, все поля!'
+        });
+      }
+    }
+
+    $scope.numberCheck = function (data) {
+      $scope.sendData.phone = '+3' + data.phone.split('').filter(function (val) {
+        return Number(val) || val == '0';
+      }).join('').substr(1, 10);
+    }
+
+    $scope.showAlert = function (text) {
+      var alertPopup = $ionicPopup.alert({
+        template: text
+      });
+
+      alertPopup.then(function (res) {
+
+      });
+    }
+
+  })
   .controller('FavCtrl', function ($scope, Chats, Repetitors, $state) {
 
-    //$scope.chats = Chats.all();
     $scope.favs = JSON.parse(localStorage.getItem('repetitor_fav'));
     $scope.delFav = function (fav) {
       var index = $scope.favs.indexOf(fav);
@@ -170,8 +243,8 @@ angular.module('starter.controllers', [])
     };
 
     $scope.goTo = function (id) {
-      localStorage.setItem('person_id', id);
-      $state.go('tab.search-person');
+      localStorage.setItem('fav_person_id', id);
+      $state.go('tab.fav-person');
     }
   })
 

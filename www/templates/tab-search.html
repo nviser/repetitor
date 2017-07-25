@@ -6,7 +6,7 @@
     <div class="input-label">
       Специалист
     </div>
-    <select ng-model="subject">
+    <select ng-model="searchData.subject">
       <option>Біологія</option>
       <option>Математика</option>
       <option>Українська мова</option>
@@ -17,7 +17,7 @@
     <div class="input-label">
       Цена
     </div>
-    <select ng-model="price">
+    <select ng-model="searchData.price">
       <option>45</option>
       <option>50</option>
       <option>60</option>
@@ -28,7 +28,7 @@
     <div class="input-label">
       Город
     </div>
-    <select ng-model="city">
+    <select ng-model="searchData.city">
       <option>Суми</option>
       <option>Лебедин</option>
       <option>Тростянець</option>
@@ -38,8 +38,11 @@
 
     </div>
     <div style="text-align: center">
-      <button class="button button-stable" ng-click="goTo(subject, price, city)">
+      <button class="button button-positive" ng-click="goTo()">
         Найти
+      </button>
+      <button class="button button-assertive" ng-click="clearSearch()">
+        Очистить
       </button>
       <!-- <button class="button button-stable" ng-click="searchReset(subject, price, city)">
         Сброс

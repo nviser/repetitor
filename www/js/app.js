@@ -68,6 +68,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'/*,
           }
         }
       })
+      .state('tab.fav-person', {
+        url: '/fav/person',
+        cache: false,
+        views: {
+          'tab-fav': {
+            templateUrl: 'templates/tab-fav-person.html',
+            controller: 'favPersonCtrl'
+          }
+        }
+      })
 
       .state('tab.fav', {
         url: '/fav',
